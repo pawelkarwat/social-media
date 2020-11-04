@@ -1,0 +1,72 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+{% block heading %}
+{% endblock %}
+
+        {% for post in page_obj %}
+
+        <div id="post{{ post.id }}" data-creator="{{ post.creator.id }}" class="card">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted" style="float: right">{{ post.timestamp }}</h6>
+                <h5><a class="card-subtitle mb-2 text-muted" href="{% url 'user_view' post.creator.id %}">{{ post.creator }}</a></h5>
+                <p id="content{{ post.id }}" class="card-text">{{ post.content }}</p>
+                {% if user.is_authenticated %}
+                    {% if user.id == post.creator.id %}
+                        <button data-post="{{ post.id }}" class="edit btn btn-light" style="float: right">Edit</button>
+                    {% else %}
+                        <button id="like_button{{ post.id }}" data-post="{{ post.id }}" class="like btn btn-link">
+                        {% for like in post.likes.all %}
+                            {% if like.creator.id == user.id %}
+                                Un
+                            {% endif %}
+                        {% endfor %}
+                        Like</button>
+                    {% endif %}
+                {% endif %}
+                <button id="likes{{ post.id }}" class="disabled btn-light">{{ post.num_likes }}</button>
+                <img id="like-image" src="{% static 'network/like.jpg' %}">
+            </div>
+        </div>
+        <br/>
+
+    {% endfor %}
+
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+            </li>
+            {% endif %}
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                    {{ page_obj.number }}
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
+{% endblock %}
+
+
+{% block script %}
+
+<script src="{% static 'network/posts.js' %}"></script>
+
+{% endblock %}

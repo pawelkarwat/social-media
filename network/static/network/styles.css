@@ -1,0 +1,24 @@
+.navbar {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.body {
+    padding-top: 10px;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+#New-Post-submit-button {
+    padding: 5px;
+    float: right;
+}
+
+#like-image {
+    height: 20px;
+}

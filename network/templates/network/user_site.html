@@ -1,0 +1,32 @@
+{% extends "network/posts_template.html" %}
+
+{% block heading %}
+
+    <br/><br/>
+    <h1>{{ owner.username }}</h1>
+    <h6>Followers: {{ owner.followers_count }}</h6>
+    <h6>Follows: {{ owner.following_count }}</h6>
+
+    <br/>
+
+    {% if user.is_authenticated %}
+
+    {% if owner.id != user.id %}
+        <form action="{% url 'follow_user' owner.id %}" method="post">
+        {% csrf_token %}
+        {% if is_following %}
+            <input type="submit" class="btn btn-light" value="UnFollow">
+        {% else %}
+            <input type="submit" class="btn btn-light" value="Follow">
+        {% endif %}
+        </form>
+
+    {% endif %}
+
+    {% endif %}
+
+    <br/><br/>
+
+    <h4>Posts:</h4>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "network/posts_template.html" %}
+
+{% block heading %}
+    {% if user.is_authenticated %}
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        <div id="New-Post">
+            <textarea id="New-Post-text" class="form-control" name="body" placeholder="Add New Post" rows="3"></textarea>
+        </div>
+        <div id="New-Post-submit-button">
+            <input type="submit" class="btn btn-light" value="Post">
+        </div>
+    </form>
+    <br/>
+    {% endif %}
+
+    <br/><br/>
+
+{% endblock %}
